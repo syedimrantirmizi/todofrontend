@@ -3,16 +3,17 @@ import { base_URL } from "./config";
 import axios from "axios";
 
 function App() {
-  const [value, setValue] = useState();
+  const [inputValue, setinputValue] = useState("");
   const [post, setPost] = useState();
   const addPost = async () => {
     try {
       const obj = {
-        value: value,
+        value: inputValue,
         userID: "101",
       };
       const addPost = await axios.post(`${base_URL}/createpost`, obj);
       fetchData();
+      setinputValue("")
       console.log("Post Created");
     } catch (error) {
       console.log("Error", error.message);
@@ -56,11 +57,11 @@ function App() {
           <p className="pb-5 text-center font-semibold text-xl">TODO APP</p>
           <div className="w-[500px] flex flex-col gap-10 items-center">
             <input
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setinputValue(e.target.value)} value={inputValue}
               type="text"
               className="py-5 px-4 outline-none focus:text-white hover:text-white text-black text-lg font-semibold border-green-600/70 border hover:bg-green-600/70 focus:bg-green-600/70  transition-all duration-[0.4s] rounded-xl w-full"
             />
-            <button onClick={() => addPost()} className="py-4 text-white font-semibold rounded-xl bg-green-600/70 w-[250px] shadow-lg shadow-green-500/70 hover:shadow-green-400/70 hover:bg-green-500/70 transition-all duration-[0.4s]">
+            <button onClick={() => {addPost();}} className="py-4 text-white font-semibold rounded-xl bg-green-600/70 w-[250px] shadow-lg shadow-green-500/70 hover:shadow-green-400/70 hover:bg-green-500/70 transition-all duration-[0.4s]">
               Create Post
             </button>
             {post?.map((value) => {
